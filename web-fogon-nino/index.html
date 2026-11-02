@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Fogón de Don Nino — Parrilla en Villa Urquiza, CABA</title>
+  <meta name="description"
+    content="Parrilla de barrio con 40 años de historia en Villa Urquiza. Asado, milanesas y flan casero de toda la vida. Salón, take away, delivery y reservas por WhatsApp.">
+
+  <meta property="og:title" content="El Fogón de Don Nino — Parrilla en Villa Urquiza">
+  <meta property="og:description"
+    content="40 años de historia, tres generaciones de la misma familia. Mirá la carta, reservá tu mesa o hacé tu pedido por WhatsApp.">
+  <meta property="og:type" content="restaurant">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <script type="application/ld+json" id="ld-json"></script>
+</head>
+
+<body>
+  <div class="textura-fondo" aria-hidden="true"></div>
+
+  <!-- ===== Barra de pestañas tipo separadores de carta ===== -->
+  <nav class="tabs-carta" aria-label="Navegación principal">
+    <span class="tabs-carta__marca">🔥<span class="tabs-carta__marca-texto"> Don Nino</span></span>
+    <div class="tabs-carta__panel" id="tabs-panel">
+      <button class="tab-carta" data-page="portada">Inicio</button>
+      <button class="tab-carta" data-page="menu">Carta</button>
+      <button class="tab-carta" data-page="conocenos">Conócenos</button>
+      <button class="tab-carta" data-page="servicios">Servicios</button>
+      <button class="tab-carta" data-page="contacto">Contacto</button>
+    </div>
+    <span class="pagina-indicador" id="pagina-indicador">1/5</span>
+    <button class="tabs-carta__toggle" id="tabs-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"
+      aria-controls="tabs-panel">
+      <span class="tabs-carta__toggle-barra"></span>
+      <span class="tabs-carta__toggle-barra"></span>
+      <span class="tabs-carta__toggle-barra"></span>
+    </button>
+  </nav>
+
+  <!-- ===== Flechas de navegación ===== -->
+  <button class="flecha flecha--prev" aria-label="Página anterior">‹</button>
+  <button class="flecha flecha--next" aria-label="Página siguiente">›</button>
+
+  <!-- ===== Viewport / track deslizante ===== -->
+  <div class="carta-viewport">
+    <div class="carta-track">
+
+      <!-- ============== PÁGINA 1: PORTADA ============== -->
+      <section class="pagina pagina--home" id="portada" data-page="portada">
+        <div class="home-portada__overlay" aria-hidden="true"></div>
+        <div class="home-portada__contenido">
+          <div class="home-portada__texto">
+            <p class="hero__kicker">Villa Urquiza · 40 años al calor de las brasas</p>
+            <h1>El Fogón de Don Nino</h1>
+            <p class="hero__bajada">Un rincón del barrio que no cambia.</p>
+          </div>
+
+          <div class="home-destacados">
+            <div class="carrusel">
+              <button type="button" class="carrusel-flecha carrusel-flecha--prev" aria-label="Ver plato anterior">‹</button>
+              <div class="destacados-strip" id="destacados-strip" data-carrusel-track>
+                <!-- Se completa dinámicamente con los platos destacados del menú -->
+              </div>
+              <button type="button" class="carrusel-flecha carrusel-flecha--next" aria-label="Ver plato siguiente">›</button>
+            </div>
+          </div>
+
+          <div class="cta-row cta-row--portada">
+            <a href="#" class="btn btn--brasa" data-whatsapp-link target="_blank" rel="noopener">Reservá tu lugar</a>
+            <a href="#menu" class="btn btn--outline">Ver la carta</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== PÁGINA 2: MENÚ ============== -->
+      <section class="pagina" id="menu" data-page="menu">
+        <div class="pagina-contenido">
+          <div class="menu-cabecera">
+            <div>
+              <h2 style="margin-top:20px;">La carta</h2>
+              <p style="color:var(--crema-suave); margin-top:-8px;">
+                Lo de siempre en casa: recetas de toda la vida, hechas a las brasas.
+              </p>
+            </div>
+            <a href="#contacto" class="btn btn--brasa menu-cabecera__cta">Hacé tu pedido</a>
+          </div>
+
+          <div class="menu-aviso-precios">
+            <svg class="menu-aviso-precios__icono" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" />
+              <line x1="12" y1="11" x2="12" y2="16" />
+              <line x1="12" y1="7.5" x2="12" y2="7.5" />
+            </svg>
+            <p>Los precios pueden tener alguna variación respecto a esta carta. Ante la duda, confirmalos al hacer tu pedido.</p>
+          </div>
+
+          <div class="menu-chips" id="menu-chips"></div>
+          <div id="menu-grid">
+            <!-- Se completa dinámicamente desde la Google Sheet -->
+          </div>
+
+          <div class="menu-cta-final">
+            <p>¿Ya sabés qué pedir?</p>
+            <a href="#contacto" class="btn btn--brasa">Hacé tu pedido →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== PÁGINA 3: CONOCENOS (Quiénes somos) ============== -->
+      <section class="pagina pagina--fit" id="conocenos" data-page="conocenos">
+        <div class="pagina-contenido">
+
+          <!-- BLOQUE: QUIÉNES SOMOS — historia, en tono calmo -->
+          <div class="bloque-historia">
+            <h2>Quiénes somos</h2>
+
+            <div class="carrusel">
+              <button type="button" class="carrusel-flecha carrusel-flecha--prev" aria-label="Foto anterior">‹</button>
+              <div class="historia-timeline" data-carrusel-track>
+                <figure class="historia-foto historia-foto--inicio">
+                  <img src="images/familiar-inicios.jpg"
+                    alt="Foto familiar del día de la inauguración de la parrilla, varias generaciones reunidas a la mesa">
+                  <figcaption>Los inicios</figcaption>
+                </figure>
+                <figure class="historia-foto historia-foto--oficio">
+                  <img src="images/don-nino.jpg" alt="Don Nino de espaldas, avivando el fuego de la parrilla a leña">
+                  <figcaption>Don Nino, a puro fuego</figcaption>
+                </figure>
+                <figure class="historia-foto historia-foto--hoy">
+                  <img src="images/ricardo-facu-hoy.jpg"
+                    alt="Ricardo y Facu compartiendo una mesa junto a la parrilla, hoy">
+                  <figcaption>Ricardo y Facu, hoy</figcaption>
+                </figure>
+              </div>
+              <button type="button" class="carrusel-flecha carrusel-flecha--next" aria-label="Foto siguiente">›</button>
+            </div>
+
+            <div class="historia-texto">
+              <p>
+                Hace 40 años, Don Nino compró una parrilla de barrio en Villa Urquiza
+                y encendió un fuego que no se apagó más. No hubo receta escrita: el
+                oficio se lo enseñó la brasa, a fuerza de estar parado frente a ella,
+                noche tras noche.
+              </p>
+              <p>
+                Ese fuego pasó de sus manos a las de su hijo Ricardo, y hoy Facu —
+                el nieto — completa la tercera generación: se ocupa de que todo, de
+                la parrilla a la puerta del salón, siga funcionando como el primer
+                día.
+              </p>
+              <p>Tres generaciones. La misma cuadra. El mismo fuego prendido.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============== PÁGINA 4: SERVICIOS (Cómo pedir + Reservas) ============== -->
+      <section class="pagina pagina--fit" id="servicios" data-page="servicios">
+        <div class="pagina-contenido">
+
+          <!-- BLOQUE: CÓMO PEDIR — panel neutro y funcional -->
+          <div class="bloque-como-pedir">
+            <h2>Cómo pedir</h2>
+            <div class="carrusel">
+              <button type="button" class="carrusel-flecha carrusel-flecha--prev" aria-label="Servicio anterior">‹</button>
+              <div class="servicios-grid" data-carrusel-track>
+                <div class="servicio-card">
+                  <svg class="servicio-card__icono" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M6 2v7c0 1.1.9 2 2 2s2-.9 2-2V2" />
+                    <path d="M8 11v11" />
+                    <path d="M17 2c-1.7 0-3 2-3 5s1.3 5 3 5" />
+                    <path d="M17 2v19" />
+                  </svg>
+                  <h3>Salón</h3>
+                  <p>Comé en el local, con la mesa lista y el fuego prendido.</p>
+                  <a href="#" class="btn btn--outline" data-whatsapp-link target="_blank" rel="noopener">Reservar
+                    mesa</a>
+                </div>
+                <div class="servicio-card">
+                  <svg class="servicio-card__icono" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M6 8h12l-1 12H7L6 8Z" />
+                    <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+                  </svg>
+                  <h3>Take away</h3>
+                  <p>Pedí y retirá vos mismo, sin esperar.</p>
+                  <a href="#" class="btn btn--outline" data-whatsapp-link target="_blank" rel="noopener">Pedí para
+                    retirar</a>
+                </div>
+                <div class="servicio-card">
+                  <svg class="servicio-card__icono" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 8l9-4 9 4-9 4-9-4Z" />
+                    <path d="M3 8v8l9 4 9-4V8" />
+                    <path d="M12 12v8" />
+                  </svg>
+                  <h3>Delivery</h3>
+                  <p>Pedilo desde casa, sin moverte.</p>
+                  <div id="delivery-info"></div>
+                </div>
+              </div>
+              <button type="button" class="carrusel-flecha carrusel-flecha--next" aria-label="Servicio siguiente">›</button>
+            </div>
+          </div>
+
+          <!-- BLOQUE: RESERVAS — el punto más caliente de la sección -->
+          <div class="reserva-destacada">
+            <p class="reserva-destacada__titulo">Reservá tu lugar junto al fuego</p>
+            <p>
+              Los findes, el barrio entero se junta acá y las mesas vuelan. Para
+              cumpleaños, reuniones o grupos grandes es la misma idea: avisanos antes
+              por WhatsApp o teléfono y te acomodamos junto al fuego.
+            </p>
+            <div class="cta-row">
+              <a href="#contacto" class="btn btn--brasa">Reservar mi mesa</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============== PÁGINA 5: CONTACTO ============== -->
+      <section class="pagina" id="contacto" data-page="contacto">
+        <div class="pagina-contenido">
+          <h2 style="margin-top:20px;">Contacto</h2>
+
+          <div class="contacto-bloque">
+            <h2>Hacé tu pedido</h2>
+            <p style="color:var(--crema-suave); margin:0;">WhatsApp o teléfono — como más cómodo te quede.</p>
+            <div class="contacto-cta-par">
+              <a href="#" class="btn btn--brasa" data-whatsapp-link target="_blank" rel="noopener">💬 Pedí por
+                WhatsApp</a>
+              <a href="#" class="btn btn--outline" data-tel-link>📞 <span data-tel-texto>Llamar</span></a>
+            </div>
+          </div>
+
+          <div class="contacto-bloque">
+            <h2>Encontranos</h2>
+            <p data-direccion-texto style="color:var(--crema-suave);"></p>
+
+            <ul class="horarios-lista" id="horarios-lista"></ul>
+
+            <div class="mapa-embed">
+              <iframe id="maps-iframe" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                title="Ubicación en el mapa"></iframe>
+            </div>
+
+            <a class="instagram-cta" data-instagram-link href="#" target="_blank" rel="noopener">
+              Seguinos en Instagram — <span data-instagram-texto></span>
+            </a>
+          </div>
+
+          <p class="footer-mini">El Fogón de Don Nino · Villa Urquiza, CABA</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- PapaParse: parseo robusto de CSV publicado desde Google Sheets -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/menu.js" defer></script>
+  <script src="js/carrusel.js" defer></script>
+  <script src="js/navigation.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+
+</html>
