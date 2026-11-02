@@ -1,0 +1,1215 @@
+/* ============================================================
+   EL FOGÓN DE DON NINO — "fierro y madera, no neón"
+   ============================================================ */
+
+:root {
+  --brasa: #d9480f;
+  --brasa-fuerte: #b8360a;
+  --ascua: #f2762e;
+  --carbon: #17120f;
+  --carbon-suave: #241c17;
+  --madera: #3e2a1e;
+  --madera-clara: #5a3f2c;
+  --crema: #f4e9dc;
+  --crema-suave: #e8d9c5;
+  --linea: rgba(244, 233, 220, 0.14);
+
+  --font-titulo: "Fraunces", Georgia, serif;
+  --font-cuerpo: "Work Sans", -apple-system, sans-serif;
+
+  --radio: 14px;
+  --sombra: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  /* la "carta" maneja su propio scroll interno */
+}
+
+body {
+  background: var(--carbon);
+  color: var(--crema);
+  font-family: var(--font-cuerpo);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-titulo);
+  font-weight: 600;
+  margin: 0 0 0.4em;
+  letter-spacing: 0.01em;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Grano sutil de fondo, vía CSS, sin assets externos */
+.textura-fondo {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(ellipse at 20% 15%, rgba(217, 72, 15, 0.16), transparent 55%),
+    radial-gradient(ellipse at 85% 80%, rgba(217, 72, 15, 0.12), transparent 50%);
+}
+
+/* ============================================================
+   BARRA DE PESTAÑAS ("separadores de carta")
+   ============================================================ */
+
+.tabs-carta {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, var(--carbon) 0%, var(--carbon) 75%, transparent 100%);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabs-carta::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs-carta__marca {
+  font-family: var(--font-titulo);
+  font-size: 1.05rem;
+  color: var(--ascua);
+  margin-right: auto;
+  white-space: nowrap;
+  padding-right: 10px;
+  flex-shrink: 0;
+}
+
+/* En modo bar (desktop/tablet ancho) el panel no debe agregar un nivel
+   de layout propio: sus botones tienen que comportarse como hijos flex
+   directos de .tabs-carta, igual que antes de envolverlos. */
+.tabs-carta__panel {
+  display: contents;
+}
+
+.tab-carta {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--crema-suave);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tab-carta:hover {
+  color: var(--crema);
+}
+
+.tab-carta--activa,
+.tab-carta.tab--activa {
+  background: var(--brasa);
+  color: var(--crema);
+  border-color: var(--brasa);
+}
+
+/* Botón hamburguesa: oculto salvo en el modo compacto de abajo. */
+.tabs-carta__toggle {
+  display: none;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+}
+
+.tabs-carta__toggle-barra {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--crema);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.tabs-carta__toggle[aria-expanded="true"] .tabs-carta__toggle-barra:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.tabs-carta__toggle[aria-expanded="true"] .tabs-carta__toggle-barra:nth-child(2) {
+  opacity: 0;
+}
+
+.tabs-carta__toggle[aria-expanded="true"] .tabs-carta__toggle-barra:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* En pantallas angostas la barra se comprime a logo + botón de menú,
+   y las pestañas pasan a un panel desplegable debajo, apiladas y con
+   toque cómodo para el dedo (en vez de una tira que obliga a scrollear
+   horizontalmente para ver todas las páginas). */
+@media (max-width: 700px) {
+  .tabs-carta {
+    overflow: visible;
+    gap: 8px;
+  }
+
+  .pagina-indicador {
+    display: none;
+  }
+
+  .tabs-carta__toggle {
+    display: flex;
+  }
+
+  .tabs-carta__panel {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 12px 14px;
+    background: var(--carbon);
+    border-bottom: 1px solid var(--linea);
+    box-shadow: var(--sombra);
+  }
+
+  .tabs-carta__panel.abierto {
+    display: flex;
+  }
+
+  .tab-carta {
+    width: 100%;
+    text-align: left;
+    padding: 13px 16px;
+    font-size: 0.95rem;
+    min-height: 48px;
+  }
+
+  .chip {
+    padding: 10px 16px;
+  }
+}
+
+/* ============================================================
+   VIEWPORT / TRACK — el "libro" que se desliza
+   ============================================================ */
+
+.carta-viewport {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.carta-track {
+  display: flex;
+  width: 500%;
+  height: 100%;
+  transition: transform 0.55s cubic-bezier(0.65, 0, 0.24, 1);
+  will-change: transform;
+}
+
+.pagina {
+  width: 20%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 78px 0 110px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pagina-contenido {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* La portada no se piensa como página con scroll: entra entera en
+   una pantalla, con la foto de fondo y los platos destacados siempre
+   a la vista apenas se abre el sitio. */
+.pagina--home {
+  padding: 0;
+}
+
+/* Conocenos y Servicios tampoco scrollean: el contenido se acomoda
+   al alto disponible (clamp con vh) en vez de crecer libremente, así
+   entran enteras en la pantalla como la portada. */
+.pagina--fit {
+  display: flex;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pagina--fit .pagina-contenido {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* En pantallas donde el contenido entra sin scroll, queda centrado
+     (la intención original). Si no entra (celulares muy bajos), "safe"
+     evita que el centrado empuje el principio del contenido fuera del
+     área visible sin forma de scrollear hasta ahí; los navegadores que
+     no soportan "safe center" ignoran la línea y se quedan con el
+     center de arriba. */
+  justify-content: center;
+  justify-content: safe center;
+  padding: clamp(66px, 8vh, 82px) 20px clamp(10px, 2.4vh, 22px);
+}
+
+/* ============================================================
+   FLECHAS DE NAVEGACIÓN
+   ============================================================ */
+
+.flecha {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 15;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--linea);
+  background: rgba(23, 18, 15, 0.75);
+  color: var(--crema);
+  font-size: 1.4rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.flecha:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.flecha--prev {
+  left: 16px;
+}
+
+.flecha--next {
+  right: 16px;
+}
+
+@media (min-width: 860px) {
+  .flecha {
+    display: flex;
+  }
+}
+
+/* ============================================================
+   CARRUSELES INTERNOS — flechas de apoyo para las tiras con scroll
+   propio (destacados de portada, fotos de "Conocenos", tarjetas de
+   "Servicios"). Además de sumar una forma de recorrerlas sin
+   depender del dedo, evitan que ese swipe se confunda con el de
+   cambio de página (ver [data-carrusel-track] en navigation.js).
+   ============================================================ */
+
+.carrusel {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.carrusel-flecha {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--linea);
+  background: rgba(23, 18, 15, 0.8);
+  color: var(--crema);
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carrusel-flecha:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.carrusel-flecha--prev {
+  left: 2px;
+}
+
+.carrusel-flecha--next {
+  right: 2px;
+}
+
+/* Cuando el contenido entra completo (layouts centrados de escritorio)
+   no hay nada para desplazar: las flechas sólo estorban. */
+.carrusel--sin-overflow .carrusel-flecha {
+  display: none;
+}
+
+.pagina-indicador {
+  font-size: 0.75rem;
+  color: var(--crema-suave);
+  background: var(--carbon);
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--linea);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   BOTONES / CTA
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid transparent;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn--brasa {
+  background: linear-gradient(135deg, var(--ascua), var(--brasa-fuerte));
+  color: var(--crema);
+}
+
+.btn--brasa:hover {
+  filter: brightness(1.08);
+}
+
+.btn--outline {
+  border-color: var(--crema-suave);
+  color: var(--crema);
+}
+
+.btn--outline:hover {
+  background: rgba(244, 233, 220, 0.08);
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+/* ============================================================
+   PORTADA
+   ============================================================ */
+
+.pagina--home {
+  position: relative;
+  background-image: url("../images/parrilla-brasas.png");
+  background-size: cover;
+  background-position: 65% 45%;
+}
+
+.home-portada__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 68% 60%, rgba(242, 118, 46, 0.2), transparent 60%),
+    linear-gradient(180deg, rgba(23, 18, 15, 0.55) 0%, rgba(23, 18, 15, 0.5) 30%, rgba(23, 18, 15, 0.7) 70%, rgba(23, 18, 15, 0.88) 100%),
+    linear-gradient(90deg, rgba(23, 18, 15, 0.5) 0%, transparent 18%, transparent 82%, rgba(23, 18, 15, 0.5) 100%);
+}
+
+.home-portada__contenido {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(10px, 2.6vh, 26px);
+  padding: clamp(64px, 11vh, 76px) 20px clamp(14px, 3.5vh, 28px);
+  max-width: 1080px;
+  margin: 0 auto;
+  text-align: center;
+  /* Igual que en "Conocenos"/"Servicios": si todo el hero entra, queda
+     centrado (la intención original). Si no entra —celular acostado,
+     pantalla muy baja—, "safe" evita que el centrado empuje el kicker
+     debajo de la barra y los botones fuera de la pantalla sin forma de
+     llegar a ellos; el .pagina de base ya scrollea si hace falta. */
+  justify-content: center;
+  justify-content: safe center;
+}
+
+.home-portada__texto {
+  max-width: 640px;
+}
+
+.home-portada__contenido h1 {
+  font-size: clamp(2rem, 6.5vw, 3.1rem);
+  color: var(--crema);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero__kicker {
+  color: var(--ascua);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.hero__bajada {
+  color: var(--crema-suave);
+  font-size: clamp(0.8rem, 2vw + 0.3rem, 1.05rem);
+  margin: 0 auto;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+}
+
+.home-destacados {
+  width: 100%;
+}
+
+.home-destacados .destacado-card img {
+  height: 148px;
+}
+
+.home-destacados .destacado-card {
+  flex-basis: 192px;
+}
+
+.cta-row--portada {
+  justify-content: center;
+}
+
+.cta-row--portada .btn {
+  padding: 11px 20px;
+  font-size: 0.92rem;
+}
+
+.destacados-strip {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 4px 4px 14px;
+  scroll-snap-type: x proximity;
+}
+
+/* Recién centramos la tira cuando las 5 tarjetas entran sin scroll:
+   con overflow real, justify-content:center arranca desplazado al
+   medio y esconde la primera tarjeta detrás del borde izquierdo. */
+@media (min-width: 1100px) {
+  .destacados-strip {
+    justify-content: center;
+  }
+}
+
+.destacado-card {
+  position: relative;
+  scroll-snap-align: start;
+  flex: 0 0 180px;
+  text-decoration: none;
+  border-radius: var(--radio);
+  overflow: hidden;
+  background: rgba(36, 28, 23, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(242, 118, 46, 0.35);
+  box-shadow: var(--sombra);
+}
+
+.destacado-card--skeleton {
+  height: 208px;
+  background: rgba(36, 28, 23, 0.4);
+}
+
+.destacado-card img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+}
+
+.destacado-info {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.destacado-nombre {
+  font-weight: 600;
+  color: var(--crema);
+  font-size: 0.9rem;
+}
+
+.destacado-precio {
+  color: var(--ascua);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* En pantallas bajas (celulares chicos, o el celular acostado) el hero
+   completo —título, bajada, tira de destacados y botones— no entraba
+   sin que algo quedara cortado. Achicamos texto, fotos y botones en
+   conjunto para que todo entre de un vistazo, sin depender de agrandar
+   la pantalla ni de hacer scroll. */
+@media (max-height: 700px) {
+  .home-portada__contenido {
+    gap: clamp(6px, 1.6vh, 12px);
+  }
+
+  .home-portada__contenido h1 {
+    font-size: clamp(1.4rem, 4.5vh + 0.6rem, 2.3rem);
+  }
+
+  .hero__kicker {
+    font-size: 0.68rem;
+  }
+
+  .hero__bajada {
+    font-size: clamp(0.72rem, 1.6vh + 0.3rem, 0.92rem);
+  }
+
+  .destacado-card img,
+  .home-destacados .destacado-card img {
+    height: clamp(72px, 13vh, 130px);
+  }
+
+  .home-destacados .destacado-card {
+    flex-basis: 148px;
+  }
+
+  .destacado-card {
+    flex: 0 0 148px;
+  }
+
+  .destacado-info {
+    padding: 7px 10px 9px;
+  }
+
+  .destacado-nombre {
+    font-size: 0.8rem;
+  }
+
+  .destacado-precio {
+    font-size: 0.74rem;
+  }
+
+  .cta-row--portada .btn {
+    padding: 8px 16px;
+    font-size: 0.82rem;
+  }
+}
+
+/* ============================================================
+   MENÚ
+   ============================================================ */
+
+.menu-cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.menu-cabecera__cta {
+  margin-top: 20px;
+  flex-shrink: 0;
+}
+
+.menu-aviso-precios {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 18px 0 4px;
+  padding: 12px 16px;
+  background: rgba(242, 118, 46, 0.08);
+  border: 1px solid rgba(242, 118, 46, 0.3);
+  border-radius: var(--radio);
+}
+
+.menu-aviso-precios__icono {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--ascua);
+}
+
+.menu-aviso-precios p {
+  margin: 0;
+  color: var(--crema-suave);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.menu-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 8px;
+}
+
+.chip {
+  background: var(--carbon-suave);
+  border: 1px solid var(--linea);
+  color: var(--crema-suave);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+
+.chip--activa {
+  background: var(--brasa);
+  border-color: var(--brasa);
+  color: var(--crema);
+}
+
+.chip--mas {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  border-color: var(--crema-suave);
+}
+
+.chip--mas-flecha {
+  font-size: 0.7em;
+}
+
+/* En mobile los filtros ocupan demasiada altura apenas se entra a la
+   carta: se muestran colapsados en una sola fila y el chip "Más" (el
+   único que se ve siempre, va primero en el DOM) los despliega. */
+@media (max-width: 700px) {
+  .chip--mas {
+    display: inline-flex;
+  }
+
+  .menu-chips {
+    max-height: 40px;
+    overflow: hidden;
+  }
+
+  .menu-chips.menu-chips--expandido {
+    max-height: none;
+  }
+}
+
+.menu-categoria {
+  margin-top: 30px;
+  scroll-margin-top: 90px;
+}
+
+.menu-categoria-titulo {
+  font-size: 1.2rem;
+  color: var(--ascua);
+  border-bottom: 1px solid var(--linea);
+  padding-bottom: 8px;
+}
+
+.menu-lista {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+}
+
+.menu-item {
+  padding: 14px 0;
+  border-bottom: 1px dashed var(--linea);
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item__cabecera {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.menu-item__nombre {
+  color: var(--crema);
+  font-weight: 600;
+  font-size: 1.02rem;
+}
+
+.menu-item__linea {
+  flex: 1 1 24px;
+  min-width: 24px;
+  border-bottom: 1px dotted var(--linea);
+  margin-bottom: 5px;
+}
+
+.menu-item__precio {
+  color: var(--ascua);
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.menu-item__desc {
+  color: var(--crema-suave);
+  font-size: 0.86rem;
+  margin: 4px 0 0;
+}
+
+.badge-orgullo {
+  display: inline-block;
+  background: var(--brasa);
+  color: var(--crema);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.menu-cta-final {
+  max-width: 460px;
+  margin: 40px auto 24px;
+  text-align: center;
+  padding: 26px;
+  background: var(--carbon-suave);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+.menu-cta-final p {
+  color: var(--crema-suave);
+  margin: 0 0 14px;
+}
+
+/* ============================================================
+   SERVICIOS
+   ============================================================
+   La sección sube en intensidad a medida que avanza: el bloque de
+   historia queda sobre el fondo plano de la página (calmo, de
+   lectura); el de "cómo pedir" vive en un panel apenas más claro
+   (funcional, neutro); el de reservas es el punto más caliente,
+   con el naranja brasa como único acento saturado de la sección. */
+
+/* --- Bloque 1: Quiénes somos ---
+   Todos los tamaños usan clamp() con vh: en vez de un tamaño fijo
+   que fuerce scroll en pantallas bajas, se achican en conjunto para
+   entrar siempre en el alto disponible. */
+
+.bloque-historia {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 2vh, 20px);
+}
+
+.bloque-historia h2 {
+  flex-shrink: 0;
+  font-size: clamp(1.3rem, 2vh + 1rem, 1.8rem);
+}
+
+.historia-timeline {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  flex-shrink: 0;
+}
+
+/* Recién centramos cuando el ancho del contenido (900px máx. menos
+   padding) alcanza para las 3 fotos sin scroll; si no, centrar con
+   overflow real deja la primera foto escondida detrás del borde. */
+@media (min-width: 860px) {
+  .historia-timeline {
+    justify-content: center;
+  }
+}
+
+.historia-foto {
+  flex: 0 0 auto;
+  width: clamp(120px, 24vw, 200px);
+  margin: 0;
+  /* "center" (no "start"): al entrar a la sección centramos la foto de
+     Don Nino por JS, y ese punto sólo se mantiene si coincide con un
+     snap point real — si no, el navegador lo pisa y vuelve al que
+     tenga más cerca. */
+  scroll-snap-align: center;
+}
+
+.historia-foto--oficio {
+  width: clamp(150px, 30vw, 260px);
+}
+
+.historia-foto img {
+  width: 100%;
+  height: clamp(110px, 24vh, 210px);
+  object-fit: cover;
+  border-radius: var(--radio);
+  border: 1px solid var(--linea);
+}
+
+.historia-foto--oficio img {
+  height: clamp(130px, 28vh, 250px);
+}
+
+.historia-foto figcaption {
+  margin-top: 6px;
+  text-align: center;
+  color: var(--crema-suave);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.historia-texto {
+  max-width: 640px;
+  margin: 0 auto;
+  flex-shrink: 1;
+  overflow: hidden;
+}
+
+.historia-texto p {
+  color: var(--crema-suave);
+  font-size: clamp(0.8rem, 1vh + 0.55rem, 0.95rem);
+  line-height: 1.42;
+  margin: 0 0 0.5em;
+}
+
+.historia-texto p:last-child {
+  margin-bottom: 0;
+  font-family: var(--font-titulo);
+  color: var(--crema);
+  font-size: clamp(0.9rem, 1.1vh + 0.6rem, 1.05rem);
+}
+
+/* --- Bloque 2: Cómo pedir --- */
+
+.bloque-como-pedir {
+  padding: clamp(13px, 2vh, 26px) clamp(16px, 3vw, 22px);
+  background: var(--carbon-suave);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+.bloque-como-pedir h2 {
+  font-size: clamp(1.3rem, 2vh + 1rem, 1.8rem);
+}
+
+.servicios-grid {
+  display: flex;
+  gap: clamp(10px, 1.6vh, 16px);
+  margin-top: clamp(10px, 2vh, 20px);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+}
+
+/* Igual que la tira de fotos: sólo centramos cuando las 3 cards
+   entran sin scroll (contenedor >= 860px, el máximo de la página
+   menos el padding lateral). */
+@media (min-width: 860px) {
+  .servicios-grid {
+    justify-content: center;
+  }
+}
+
+.servicio-card {
+  flex: 0 0 auto;
+  width: clamp(185px, 30vw, 230px);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  background: var(--madera);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: clamp(14px, 2.2vh, 22px);
+}
+
+.servicio-card__icono {
+  width: clamp(22px, 3vh, 30px);
+  height: clamp(22px, 3vh, 30px);
+  color: var(--crema-suave);
+  margin-bottom: clamp(6px, 1.2vh, 12px);
+}
+
+.servicio-card h3 {
+  color: var(--crema);
+  font-size: clamp(1rem, 1vh + 0.75rem, 1.1rem);
+}
+
+.servicio-card p {
+  flex: 1;
+  color: var(--crema-suave);
+  font-size: clamp(0.8rem, 1vh + 0.5rem, 0.9rem);
+  margin: 0 0 clamp(10px, 1.6vh, 16px);
+}
+
+.servicio-card .btn {
+  width: 100%;
+  text-align: center;
+  padding: clamp(10px, 1.8vh, 14px) 16px;
+}
+
+.delivery-nota {
+  color: var(--crema-suave);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* --- Bloque 3: Reservas (bloque consolidado, mayor jerarquía) --- */
+
+.reserva-destacada {
+  margin-top: clamp(10px, 2vh, 26px);
+  background: linear-gradient(135deg, rgba(217, 72, 15, 0.18), rgba(217, 72, 15, 0.05));
+  border: 1px solid var(--brasa);
+  border-radius: var(--radio);
+  padding: clamp(12px, 2.2vh, 22px);
+}
+
+.reserva-destacada__titulo {
+  font-family: var(--font-titulo);
+  font-size: clamp(1.05rem, 1.6vh + 0.6rem, 1.3rem);
+  color: var(--ascua);
+  margin: 0 0 6px;
+}
+
+.reserva-destacada p {
+  margin: 0;
+  color: var(--crema-suave);
+  font-size: clamp(0.82rem, 1vh + 0.55rem, 0.95rem);
+}
+
+.reserva-destacada .cta-row {
+  margin-top: clamp(8px, 1.6vh, 22px);
+}
+
+/* Con más alto de pantalla disponible (tablets, laptops, desktop),
+   los topes de los clamp() de arriba se quedaban chicos y todo el
+   contenido terminaba centrado con aire de sobra arriba y abajo.
+   Estos topes suben para que Conocenos y Servicios aprovechen la
+   pantalla en vez de flotar en el medio. */
+@media (min-width: 700px) and (min-height: 700px) {
+  .bloque-historia {
+    gap: clamp(16px, 3vh, 34px);
+  }
+
+  .bloque-historia h2,
+  .bloque-como-pedir h2 {
+    font-size: clamp(1.6rem, 3vh + 0.8rem, 2.4rem);
+  }
+
+  .historia-foto {
+    width: clamp(160px, 20vw, 240px);
+  }
+
+  .historia-foto--oficio {
+    width: clamp(190px, 25vw, 320px);
+  }
+
+  .historia-foto img {
+    height: clamp(160px, 26vh, 340px);
+  }
+
+  .historia-foto--oficio img {
+    height: clamp(190px, 32vh, 420px);
+  }
+
+  .historia-foto figcaption {
+    margin-top: 8px;
+    font-size: 0.85rem;
+  }
+
+  .historia-texto p {
+    font-size: clamp(0.95rem, 1.6vh + 0.5rem, 1.15rem);
+    line-height: 1.55;
+    margin-bottom: 0.7em;
+  }
+
+  .historia-texto p:last-child {
+    font-size: clamp(1.05rem, 1.8vh + 0.55rem, 1.3rem);
+  }
+
+  .bloque-como-pedir {
+    padding: clamp(20px, 3.4vh, 40px) clamp(20px, 3vw, 32px);
+  }
+
+  .servicios-grid {
+    gap: clamp(14px, 2.2vh, 22px);
+    margin-top: clamp(16px, 3vh, 28px);
+  }
+
+  .servicio-card {
+    width: clamp(190px, 20vw, 235px);
+    padding: clamp(18px, 3vh, 30px);
+  }
+
+  .servicio-card__icono {
+    width: clamp(28px, 4vh, 38px);
+    height: clamp(28px, 4vh, 38px);
+    margin-bottom: clamp(10px, 1.8vh, 16px);
+  }
+
+  .servicio-card h3 {
+    font-size: clamp(1.1rem, 1.4vh + 0.75rem, 1.28rem);
+  }
+
+  .servicio-card p {
+    font-size: clamp(0.9rem, 1.4vh + 0.5rem, 1.02rem);
+    margin-bottom: clamp(14px, 2.2vh, 20px);
+  }
+
+  .servicio-card .btn {
+    padding: clamp(12px, 2.2vh, 16px) 26px;
+  }
+
+  .reserva-destacada {
+    margin-top: clamp(16px, 3vh, 32px);
+    padding: clamp(18px, 3.2vh, 32px);
+  }
+
+  .reserva-destacada__titulo {
+    font-size: clamp(1.3rem, 2.2vh + 0.7rem, 1.7rem);
+    margin-bottom: 10px;
+  }
+
+  .reserva-destacada p {
+    font-size: clamp(0.92rem, 1.4vh + 0.55rem, 1.08rem);
+  }
+
+  .reserva-destacada .cta-row {
+    margin-top: clamp(12px, 2.2vh, 24px);
+  }
+}
+
+/* ============================================================
+   CONTACTO
+   ============================================================ */
+
+.contacto-bloque {
+  margin-top: 28px;
+  background: var(--carbon-suave);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 24px;
+}
+
+.contacto-bloque h2 {
+  color: var(--crema);
+  font-size: 1.2rem;
+}
+
+.contacto-cta-par {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.contacto-cta-par .btn {
+  width: 100%;
+  padding: 18px;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 480px) {
+  .contacto-cta-par {
+    grid-template-columns: 1fr;
+  }
+}
+
+.horarios-lista {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.horarios-lista li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed var(--linea);
+  padding-bottom: 6px;
+  color: var(--crema-suave);
+  font-size: 0.92rem;
+}
+
+.horario-dias {
+  color: var(--crema);
+  font-weight: 600;
+}
+
+.mapa-embed {
+  margin-top: 16px;
+  border-radius: var(--radio);
+  overflow: hidden;
+  border: 1px solid var(--linea);
+}
+
+.mapa-embed iframe {
+  width: 100%;
+  height: 260px;
+  border: 0;
+  display: block;
+}
+
+.instagram-cta {
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ascua);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-mini {
+  text-align: center;
+  color: var(--crema-suave);
+  opacity: 0.6;
+  font-size: 0.78rem;
+  margin: 40px 0 10px;
+}
