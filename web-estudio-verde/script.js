@@ -229,7 +229,7 @@
   }
 
   /* ===================== Datos de contacto (un solo lugar) ===================== */
-  // DATOS DE EJEMPLO: caso de práctica. Para publicar con datos reales, cambiar solo estos dos valores.
+  // DATOS DE EJEMPLO: caso de práctica. Para publicar con datos reales, cambiar solo los valores de CONTACTO.
   // WhatsApp: código de país + 9 + área + número, sin espacios ni signos. El mail usa .test (dominio reservado, no existe).
   // Instagram: vacío = lleva a instagram.com (neutro). Con perfil real, poner solo el usuario, ej. 'usuario'.
   var CONTACTO = {
