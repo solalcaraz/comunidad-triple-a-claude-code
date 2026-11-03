@@ -44,6 +44,10 @@ Las decisiones que tomé y por qué:
 - **Vista previa al compartir el link y favicon.** Para que el link se vea bien en WhatsApp.
 - **Publicada desde el repo, con su propia configuración.** El repo tiene varias webs, así que el proyecto de Vercel apunta a la carpeta `web-fogon-nino` como Root Directory.
 
+## Planilla de la carta
+
+En la carpeta `planilla/` está el Excel de ejemplo que alimenta la carta (`menu-fogon-de-don-nino.xlsx`). Tiene dos hojas: "Menú", con las columnas Categoría, Plato, Descripción, Precio, Foto destacada y Actualizado, y "Cómo usar esta planilla", con las instrucciones para Facu. La web no lee ese archivo: lee una copia publicada en Google Sheets como CSV, y el Excel queda como muestra de cómo se edita. Los platos y los precios son inventados.
+
 ## Cómo correrlo
 
 No se abre con doble clic en `index.html`: el navegador bloquea la lectura de la planilla y la web muestra una carta mínima de respaldo. Desde esta carpeta se levanta un servidor local:
