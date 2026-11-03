@@ -137,6 +137,7 @@ form {
   padding: 28px 26px; display: grid; gap: 18px;
 }
 label { display: grid; gap: 6px; font-weight: 600; font-size: .98rem; color: var(--petroleo); }
+label[hidden] { display: none; }
 input, select, textarea {
   font: 400 1rem var(--cuerpo); color: var(--texto);
   padding: 13px 14px; border: 1.5px solid var(--borde); border-radius: 12px; background: var(--hueso);

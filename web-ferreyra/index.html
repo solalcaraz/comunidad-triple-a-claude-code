@@ -139,14 +139,14 @@
       <p>Con nosotros trabaja un equipo de tres personas más, que te ayudan a que cada consulta avance sin vueltas.</p>
     </section>
 
-    <!-- 5. Contacto: formulario que arma el mensaje estructurado y lo envía a WhatsApp -->
+    <!-- 5. Contacto: formulario que arma el mensaje estructurado y lo envía a WhatsApp o por mail -->
     <section id="contacto">
       <div class="contacto-texto">
         <h2>Contanos qué necesitás</h2>
-        <p>Sin compromiso. Respondemos por WhatsApp y llegamos a la reunión sabiendo cómo ayudarte.</p>
+        <p>Sin compromiso. Respondemos por WhatsApp o mail y llegamos a la reunión sabiendo cómo ayudarte.</p>
         <ul>
           <li>Te lleva menos de un minuto</li>
-          <li>Te respondemos por WhatsApp</li>
+          <li>Te respondemos por WhatsApp o mail</li>
           <li>Atendemos online en todo el país</li>
         </ul>
       </div>
@@ -181,12 +181,16 @@
             <option>Por este mismo WhatsApp</option>
             <option>Por llamada</option>
             <option>Por videollamada</option>
+            <option>Por mail</option>
           </select>
+        </label>
+        <label id="campo-mail" hidden>Tu mail
+          <input type="email" name="mail" autocomplete="email">
         </label>
         <label>Algo más que quieras contarnos (opcional)
           <textarea name="mensaje" rows="3"></textarea>
         </label>
-        <button type="submit">Enviar por WhatsApp</button>
+        <button type="submit" id="boton-envio">Enviar por WhatsApp</button>
       </form>
     </section>
 

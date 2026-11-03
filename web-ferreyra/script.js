@@ -1,6 +1,7 @@
 // Datos de contacto de EJEMPLO: reemplazar por los reales del estudio.
 const CONTACTO = {
-  whatsapp: "5490000000000"
+  whatsapp: "5490000000000",
+  mail: "ejemplo@ferreyra.test"
 };
 
 // Menú de celular (hamburguesa con desplegable)
@@ -23,11 +24,23 @@ menuNav.querySelectorAll("ul a").forEach((a) => a.addEventListener("click", cerr
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") cerrarMenu(); });
 
 const form = document.getElementById("form-consulta");
+const campoMail = document.getElementById("campo-mail");
+const inputMail = campoMail.querySelector("input");
+const botonEnvio = document.getElementById("boton-envio");
+
+// Si elige responder por mail, aparece el campo de mail (obligatorio) y el botón cambia.
+form.elements.contacto.addEventListener("change", () => {
+  const porMail = form.elements.contacto.value === "Por mail";
+  campoMail.hidden = !porMail;
+  inputMail.required = porMail;
+  botonEnvio.textContent = porMail ? "Enviar por mail" : "Enviar por WhatsApp";
+});
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const d = new FormData(form);
   const comentario = (d.get("mensaje") || "").trim();
+  const porMail = d.get("contacto") === "Por mail";
 
   const lineas = [
     `Hola, soy ${d.get("nombre").trim()}.`,
@@ -35,13 +48,22 @@ form.addEventListener("submit", (e) => {
     `Mi situación: ${d.get("situacion")}.`,
     `Prefiero que me respondan: ${d.get("contacto")}.`
   ];
+  if (porMail) lineas.push(`Mi mail: ${d.get("mail").trim()}.`);
   if (comentario) lineas.push(`Comentario: ${comentario}`);
+  const texto = lineas.join("\n");
 
-  const url = `https://wa.me/${CONTACTO.whatsapp}?text=${encodeURIComponent(lineas.join("\n"))}`;
+  let url;
+  if (porMail) {
+    url = `mailto:${CONTACTO.mail}?subject=${encodeURIComponent("Consulta desde la web: " + d.get("necesidad"))}&body=${encodeURIComponent(texto)}`;
+  } else {
+    url = `https://wa.me/${CONTACTO.whatsapp}?text=${encodeURIComponent(texto)}`;
+  }
   // Con "noopener", window.open siempre devuelve null: por eso se abre con un enlace temporal.
   const enlace = document.createElement("a");
   enlace.href = url;
-  enlace.target = "_blank";
-  enlace.rel = "noopener";
+  if (!porMail) {
+    enlace.target = "_blank";
+    enlace.rel = "noopener";
+  }
   enlace.click();
 });
