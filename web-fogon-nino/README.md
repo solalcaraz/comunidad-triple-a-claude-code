@@ -14,7 +14,7 @@ https://web-fogon-nino.vercel.app
 
 Los datos de contacto son de ejemplo: el WhatsApp y el teléfono no existen, el botón de Instagram lleva a instagram.com y el de delivery a la home de PedidosYa. La dirección (Av. Triunvirato 4324) también es inventada.
 
-Las fotos son de relleno. Las de Ensaladas y las dos categorías de Bebidas son de Pexels: la ensalada de Florencia Potter (https://www.pexels.com/photo/402007/), la limonada de Dylann Hendricks (https://www.pexels.com/photo/15153422/) y la cerveza de Little Visuals (https://www.pexels.com/photo/1862/). Del resto no verifiqué el origen. En un proyecto real las reemplazaría por las del cliente.
+Las fotos son de relleno: tres son de Pexels y del resto no verifiqué el origen. En un proyecto real las reemplazaría por las del cliente.
 
 ## Tecnologías
 
@@ -50,13 +50,7 @@ En la carpeta `planilla/` está el Excel de ejemplo que alimenta la carta (`menu
 
 ## Cómo correrlo
 
-No se abre con doble clic en `index.html`: el navegador bloquea la lectura de la planilla y la web muestra una carta mínima de respaldo. Desde esta carpeta se levanta un servidor local:
-
-```
-python -m http.server 8765
-```
-
-y se abre http://localhost:8765. También se puede ver en el link publicado.
+No se corre: es una página estática y se ve en el link publicado, https://web-fogon-nino.vercel.app.
 
 ## Qué aprendí y qué mejoraría
 
@@ -70,7 +64,6 @@ y se abre http://localhost:8765. También se puede ver en el link publicado.
 
 **Qué mejoraría**
 
-- Reemplazar las fotos de relleno por las del cliente, y agregar fotos para todas las categorías de la carta.
+- Reemplazar las fotos de relleno por las del cliente.
 - Poner los datos de contacto reales: WhatsApp, teléfono, Instagram y el link de la app de delivery.
 - Medir la velocidad con Lighthouse sobre la web publicada y mejorar lo que salga.
-- Pasar la carta a un sistema donde Facu pueda subir fotos directamente, sin depender de links externos.
