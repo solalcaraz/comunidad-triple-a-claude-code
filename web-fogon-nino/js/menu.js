@@ -12,6 +12,12 @@ const Menu = (() => {
     { categoria: "Postres", plato: "Flan de Don Nino", descripcion: "Con dulce de leche y crema", precio: "$4.500", destacado: true, foto: "images/flan-don-nino.jpg" },
   ];
 
+  // El texto de la planilla se inserta como HTML: se escapa para que una
+  // celda con "<" o comillas no rompa la página ni inyecte código.
+  function esc(texto) {
+    return String(texto ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
   function normalizar(texto) {
     return (texto || "").trim().toLowerCase();
   }
@@ -118,16 +124,16 @@ const Menu = (() => {
 
   function filaMenuHTML(item) {
     const badge = resolverBadge(item.plato);
-    const nombre = badge ? `${item.plato} <span class="badge-orgullo">${badge}</span>` : item.plato;
+    const nombre = badge ? `${esc(item.plato)} <span class="badge-orgullo">${esc(badge)}</span>` : esc(item.plato);
 
     return `
       <li class="menu-item">
         <div class="menu-item__cabecera">
           <span class="menu-item__nombre">${nombre}</span>
           <span class="menu-item__linea" aria-hidden="true"></span>
-          <span class="menu-item__precio">${item.precio}</span>
+          <span class="menu-item__precio">${esc(item.precio)}</span>
         </div>
-        ${item.descripcion ? `<p class="menu-item__desc">${item.descripcion}</p>` : ""}
+        ${item.descripcion ? `<p class="menu-item__desc">${esc(item.descripcion)}</p>` : ""}
       </li>
     `;
   }
@@ -137,7 +143,7 @@ const Menu = (() => {
     if (!cont) return;
 
     const chipsCategoria = categorias
-      .map((cat) => `<button type="button" class="chip" data-jump="${slugCategoria(cat)}">${cat}</button>`)
+      .map((cat) => `<button type="button" class="chip" data-jump="${slugCategoria(cat)}">${esc(cat)}</button>`)
       .join("");
 
     // El botón "Más" va primero en el DOM (no al final) para asegurarse
@@ -178,7 +184,7 @@ const Menu = (() => {
         const platosCat = items.filter((it) => it.categoria === cat);
         return `
           <section class="menu-categoria" id="${slugCategoria(cat)}">
-            <h2 class="menu-categoria-titulo">${cat}</h2>
+            <h2 class="menu-categoria-titulo">${esc(cat)}</h2>
             <ul class="menu-lista">
               ${platosCat.map(filaMenuHTML).join("")}
             </ul>
@@ -211,9 +217,9 @@ const Menu = (() => {
     cont.innerHTML = categoriasEnOrden(items)
       .map((cat) => {
         const conFoto = items.find((it) => it.categoria === cat && it.foto);
-        const fondo = conFoto ? ` style="background-image:url('${conFoto.foto}')"` : "";
+        const fondo = conFoto ? ` style="background-image:url('${esc(encodeURI(conFoto.foto))}')"` : "";
         return `<a href="#menu" class="categoria-tile${conFoto ? " categoria-tile--foto" : ""}" data-jump="${slugCategoria(cat)}"${fondo}>
-          <span class="categoria-tile__nombre">${cat}</span>
+          <span class="categoria-tile__nombre">${esc(cat)}</span>
         </a>`;
       })
       .join("");
