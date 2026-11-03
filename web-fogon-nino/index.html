@@ -64,14 +64,8 @@
             <p class="hero__bajada">Un rincón del barrio que no cambia.</p>
           </div>
 
-          <div class="home-destacados">
-            <div class="carrusel">
-              <button type="button" class="carrusel-flecha carrusel-flecha--prev" aria-label="Ver plato anterior">‹</button>
-              <div class="destacados-strip" id="destacados-strip" data-carrusel-track>
-                <!-- Se completa dinámicamente con los platos destacados del menú -->
-              </div>
-              <button type="button" class="carrusel-flecha carrusel-flecha--next" aria-label="Ver plato siguiente">›</button>
-            </div>
+          <div class="home-categorias" id="home-categorias" aria-label="Categorías de la carta">
+            <!-- Se completa dinámicamente con las categorías de la carta -->
           </div>
 
           <div class="cta-row cta-row--portada">
@@ -101,7 +95,10 @@
               <line x1="12" y1="11" x2="12" y2="16" />
               <line x1="12" y1="7.5" x2="12" y2="7.5" />
             </svg>
-            <p>Los precios pueden tener alguna variación respecto a esta carta. Ante la duda, confirmalos al hacer tu pedido.</p>
+            <p>
+              <strong>Precios actualizados el <span id="precios-fecha"></span>.</strong>
+              Pueden tener alguna variación: ante la duda, confirmalos al hacer tu pedido.
+            </p>
           </div>
 
           <div class="menu-chips" id="menu-chips"></div>
@@ -266,6 +263,9 @@
         </div>
       </section>
 
+    </div>
+  </div>
+
   <!-- ===== Botón flotante de WhatsApp (reservas y pedidos, en todas las páginas) ===== -->
   <a href="#" class="whatsapp-float" data-whatsapp-link target="_blank" rel="noopener"
     aria-label="Reservar o pedir por WhatsApp">
@@ -273,9 +273,6 @@
       <path fill="currentColor" d="M16.004 3C9.376 3 4 8.373 4 15c0 2.34.664 4.523 1.813 6.375L4 29l7.813-1.766A11.93 11.93 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3zm0 21.75c-1.98 0-3.82-.55-5.395-1.5l-.387-.23-4.633 1.047 1.06-4.512-.253-.4A9.71 9.71 0 0 1 6.25 15c0-5.383 4.375-9.75 9.754-9.75S25.75 9.617 25.75 15 21.383 24.75 16.004 24.75zm5.348-7.309c-.293-.148-1.734-.855-2.004-.953-.27-.098-.465-.148-.66.148-.195.293-.758.953-.93 1.148-.172.195-.34.222-.633.074-.293-.148-1.238-.457-2.36-1.457-.872-.777-1.461-1.738-1.633-2.031-.172-.293-.019-.45.13-.598.133-.133.293-.34.44-.512.148-.172.196-.293.293-.489.098-.195.05-.367-.024-.515-.074-.148-.66-1.594-.906-2.184-.238-.57-.48-.492-.66-.5-.172-.008-.367-.01-.562-.01a1.08 1.08 0 0 0-.782.363c-.27.293-1.03 1.008-1.03 2.454 0 1.445 1.055 2.844 1.203 3.04.148.195 2.078 3.176 5.035 4.453.703.304 1.25.485 1.679.62.706.225 1.348.193 1.856.117.566-.085 1.734-.71 1.98-1.394.246-.684.246-1.27.172-1.394-.074-.125-.269-.2-.562-.348z" />
     </svg>
   </a>
-
-    </div>
-  </div>
 
   <!-- PapaParse: parseo robusto de CSV publicado desde Google Sheets -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js" defer></script>

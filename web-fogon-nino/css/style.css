@@ -508,16 +508,67 @@ img {
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
 }
 
-.home-destacados {
+.home-categorias {
   width: 100%;
+  max-width: 560px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
 }
 
-.home-destacados .destacado-card img {
-  height: 148px;
+.categoria-tile {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 84px;
+  padding: 10px 8px;
+  text-decoration: none;
+  text-align: center;
+  border-radius: var(--radio);
+  background: rgba(36, 28, 23, 0.6) center / cover no-repeat;
+  border: 1px solid rgba(242, 118, 46, 0.4);
+  box-shadow: var(--sombra);
+  position: relative;
+  overflow: hidden;
 }
 
-.home-destacados .destacado-card {
-  flex-basis: 192px;
+.categoria-tile--foto::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(23, 18, 15, 0.1) 20%, rgba(23, 18, 15, 0.85) 100%);
+}
+
+.categoria-tile__nombre {
+  position: relative;
+  color: var(--crema);
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+}
+
+.categoria-tile:hover,
+.categoria-tile:focus-visible {
+  border-color: var(--ascua);
+}
+
+.categoria-tile--skeleton {
+  border-color: transparent;
+}
+
+@media (max-width: 420px) {
+  .home-categorias {
+    gap: 8px;
+  }
+
+  .categoria-tile {
+    min-height: 72px;
+  }
+
+  .categoria-tile__nombre {
+    font-size: 0.8rem;
+  }
 }
 
 .cta-row--portada {
@@ -527,68 +578,6 @@ img {
 .cta-row--portada .btn {
   padding: 11px 20px;
   font-size: 0.92rem;
-}
-
-.destacados-strip {
-  display: flex;
-  align-items: stretch;
-  gap: 14px;
-  overflow-x: auto;
-  padding: 4px 4px 14px;
-  scroll-snap-type: x proximity;
-}
-
-/* Recién centramos la tira cuando las 5 tarjetas entran sin scroll:
-   con overflow real, justify-content:center arranca desplazado al
-   medio y esconde la primera tarjeta detrás del borde izquierdo. */
-@media (min-width: 1100px) {
-  .destacados-strip {
-    justify-content: center;
-  }
-}
-
-.destacado-card {
-  position: relative;
-  scroll-snap-align: start;
-  flex: 0 0 180px;
-  text-decoration: none;
-  border-radius: var(--radio);
-  overflow: hidden;
-  background: rgba(36, 28, 23, 0.55);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(242, 118, 46, 0.35);
-  box-shadow: var(--sombra);
-}
-
-.destacado-card--skeleton {
-  height: 208px;
-  background: rgba(36, 28, 23, 0.4);
-}
-
-.destacado-card img {
-  width: 100%;
-  height: 130px;
-  object-fit: cover;
-}
-
-.destacado-info {
-  padding: 10px 12px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.destacado-nombre {
-  font-weight: 600;
-  color: var(--crema);
-  font-size: 0.9rem;
-}
-
-.destacado-precio {
-  color: var(--ascua);
-  font-size: 0.85rem;
-  font-weight: 700;
 }
 
 /* En pantallas bajas (celulares chicos, o el celular acostado) el hero
@@ -613,29 +602,8 @@ img {
     font-size: clamp(0.72rem, 1.6vh + 0.3rem, 0.92rem);
   }
 
-  .destacado-card img,
-  .home-destacados .destacado-card img {
-    height: clamp(72px, 13vh, 130px);
-  }
-
-  .home-destacados .destacado-card {
-    flex-basis: 148px;
-  }
-
-  .destacado-card {
-    flex: 0 0 148px;
-  }
-
-  .destacado-info {
-    padding: 7px 10px 9px;
-  }
-
-  .destacado-nombre {
-    font-size: 0.8rem;
-  }
-
-  .destacado-precio {
-    font-size: 0.74rem;
+  .categoria-tile {
+    min-height: clamp(56px, 10vh, 84px);
   }
 
   .cta-row--portada .btn {
@@ -1181,37 +1149,6 @@ img {
   color: var(--crema);
   font-weight: 600;
 }
-/* ============================================================
-   BOTÓN FLOTANTE DE WHATSAPP (todas las páginas)
-   ============================================================ */
-
-.whatsapp-float {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  z-index: 20;
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: var(--brasa);
-  color: var(--crema);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
-  transition: transform 0.15s ease, background-color 0.15s ease;
-}
-
-.whatsapp-float:hover,
-.whatsapp-float:focus-visible {
-  background: var(--brasa-fuerte);
-  transform: scale(1.06);
-}
-
-.whatsapp-float svg {
-  width: 30px;
-  height: 30px;
-}
 
 .mapa-embed {
   margin-top: 16px;
@@ -1243,4 +1180,35 @@ img {
   opacity: 0.6;
   font-size: 0.78rem;
   margin: 40px 0 10px;
+}
+/* ============================================================
+   BOTÓN FLOTANTE DE WHATSAPP (todas las páginas)
+   ============================================================ */
+
+.whatsapp-float {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 20;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--brasa);
+  color: var(--crema);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.whatsapp-float:hover,
+.whatsapp-float:focus-visible {
+  background: var(--brasa-fuerte);
+  transform: scale(1.06);
+}
+
+.whatsapp-float svg {
+  width: 30px;
+  height: 30px;
 }

@@ -57,6 +57,24 @@ const Menu = (() => {
     }
   }
 
+  const CACHE_FECHA_KEY = "fogon-menu-fecha-v1";
+
+  function leerFechaCache() {
+    try {
+      return localStorage.getItem(CACHE_FECHA_KEY);
+    } catch {
+      return null;
+    }
+  }
+
+  function guardarFechaCache(fecha) {
+    try {
+      localStorage.setItem(CACHE_FECHA_KEY, fecha);
+    } catch {
+      // Sin almacenamiento: se usa la fecha de SITE_CONFIG.
+    }
+  }
+
   async function fetchItemsFrescos() {
     // Si la planilla tarda de más, cortamos rápido y caemos a cache/fallback
     // en vez de dejar la tira de destacados vacía mientras el usuario espera.
@@ -69,6 +87,9 @@ const Menu = (() => {
       const parsed = Papa.parse(texto, { header: true, skipEmptyLines: true });
       const items = parsed.data.map(filaAItem).filter((it) => it.plato);
       if (!items.length) throw new Error("Planilla vacía");
+      const fecha = fechaPrecios(parsed.data);
+      renderFechaPrecios(fecha);
+      guardarFechaCache(fecha);
       return items;
     } finally {
       clearTimeout(timeout);
@@ -173,44 +194,61 @@ const Menu = (() => {
     renderLista(items);
   }
 
-  function renderDestacadosSkeleton() {
-    const cont = document.getElementById("destacados-strip");
+  function renderCategoriasSkeleton() {
+    const cont = document.getElementById("home-categorias");
     if (!cont) return;
-    cont.innerHTML = Array.from({ length: 5 })
-      .map(() => `<div class="destacado-card destacado-card--skeleton" aria-hidden="true"></div>`)
+    cont.innerHTML = Array.from({ length: 6 })
+      .map(() => `<div class="categoria-tile categoria-tile--skeleton" aria-hidden="true"></div>`)
       .join("");
   }
 
-  function renderDestacadosPortada(items) {
-    const cont = document.getElementById("destacados-strip");
+  // Portada: una tarjeta por categoría de la carta (se leen de la
+  // planilla, así que si Facu agrega una categoría, aparece sola).
+  // Al tocarla se abre la carta y salta a esa categoría.
+  function renderCategoriasPortada(items) {
+    const cont = document.getElementById("home-categorias");
     if (!cont) return;
-    const destacados = items.filter((it) => it.foto && it.destacado);
-    if (!destacados.length) {
-      cont.innerHTML = "";
-      return;
-    }
-    cont.innerHTML = destacados
-      .map(
-        (it) => `
-        <a href="#menu" class="destacado-card">
-          <img src="${it.foto}" alt="${it.plato}" loading="lazy" width="320" height="240">
-          <div class="destacado-info">
-            <span class="destacado-nombre">${it.plato}</span>
-            <span class="destacado-precio">${it.precio}</span>
-          </div>
-        </a>
-      `
-      )
+    cont.innerHTML = categoriasEnOrden(items)
+      .map((cat) => {
+        const conFoto = items.find((it) => it.categoria === cat && it.foto);
+        const fondo = conFoto ? ` style="background-image:url('${conFoto.foto}')"` : "";
+        return `<a href="#menu" class="categoria-tile${conFoto ? " categoria-tile--foto" : ""}" data-jump="${slugCategoria(cat)}"${fondo}>
+          <span class="categoria-tile__nombre">${cat}</span>
+        </a>`;
+      })
       .join("");
+
+    cont.querySelectorAll(".categoria-tile").forEach((a) => {
+      a.addEventListener("click", () => {
+        // Navigation (listener delegado) cambia de página; esperamos a que
+        // termine la transición antes de saltar a la categoría.
+        setTimeout(() => {
+          document.getElementById(a.dataset.jump)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 450);
+      });
+    });
+  }
+
+  // Fecha de "Precios actualizados": columna opcional "Actualizado" de la
+  // planilla (primera fila que la tenga) o, si no hay, la de SITE_CONFIG.
+  function fechaPrecios(filas) {
+    const fila = (filas || []).find((f) => f["Actualizado"] && f["Actualizado"].trim());
+    return fila ? fila["Actualizado"].trim() : SITE_CONFIG.preciosActualizados;
+  }
+
+  function renderFechaPrecios(fecha) {
+    const el = document.getElementById("precios-fecha");
+    if (el) el.textContent = fecha;
   }
 
   async function init() {
     const cache = leerCache();
+    renderFechaPrecios(leerFechaCache() || SITE_CONFIG.preciosActualizados);
     if (cache) {
       renderPaginaMenu(cache);
-      renderDestacadosPortada(cache);
+      renderCategoriasPortada(cache);
     } else {
-      renderDestacadosSkeleton();
+      renderCategoriasSkeleton();
     }
 
     let items;
@@ -223,7 +261,7 @@ const Menu = (() => {
     }
 
     renderPaginaMenu(items);
-    renderDestacadosPortada(items);
+    renderCategoriasPortada(items);
     return items;
   }
 
