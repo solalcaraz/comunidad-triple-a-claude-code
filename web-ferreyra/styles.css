@@ -47,15 +47,25 @@ nav ul a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 
 
 .menu-boton { display: none; }
 
-#hero { background: var(--petroleo); color: #fff; padding-top: 56px; padding-bottom: 64px; }
+/* El menú mide ~80 px: menú + hero ocupan juntos el alto de la pantalla */
+#hero {
+  background: var(--petroleo); color: #fff; padding-top: 56px; padding-bottom: 64px;
+  min-height: calc(100vh - 80px); min-height: calc(100svh - 80px);
+  display: grid; gap: 32px; align-content: center; align-items: center;
+}
+.hero-foto { margin: 0; }
+.hero-foto img {
+  display: block; width: 100%; height: 220px; object-fit: cover; object-position: 60% 40%;
+  border-radius: 24px; box-shadow: 0 18px 40px rgba(0,0,0,.28);
+}
 #hero h1 { color: #fff; font-size: clamp(2.2rem, 6vw, 3.8rem); max-width: 18ch; margin-bottom: .4em; }
 #hero p { font-size: 1.15rem; max-width: 46ch; opacity: .9; margin-bottom: 1.6rem; }
-.btn, #hero > a, form button {
+.btn, #hero .hero-texto > a, form button {
   display: inline-block; background: var(--durazno); color: var(--petroleo-oscuro);
   font: 600 1.05rem var(--cuerpo); padding: 15px 28px; border: 0; border-radius: 999px;
   text-decoration: none; cursor: pointer; transition: transform .15s, background .15s;
 }
-#hero > a:hover, form button:hover { background: #ffc4a3; transform: translateY(-2px); }
+#hero .hero-texto > a:hover, form button:hover { background: #ffc4a3; transform: translateY(-2px); }
 #hero ul { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
 #hero li {
   background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
@@ -168,6 +178,8 @@ footer strong { color: #fff; }
   #confianza { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 18px; }
   #confianza > h2 { grid-column: 1 / -1; }
   #confianza > article { margin-bottom: 0; }
+  #hero { grid-template-columns: 1.2fr 1fr; column-gap: 56px; }
+  .hero-foto img { height: auto; max-height: calc(100svh - 80px - 130px); aspect-ratio: 4 / 5; margin-left: auto; width: auto; max-width: 100%; }
   #contacto { grid-template-columns: 1fr 1.2fr; column-gap: 56px; }
   #confianza > .ubicacion { grid-column: 1 / -1; grid-template-columns: 1fr 2fr; }
 }
