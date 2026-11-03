@@ -1,8 +1,9 @@
 // ============================================================
 // CONFIGURACIÓN DEL SITIO — "El Fogón de Don Nino"
-// Los valores marcados con "TODO" son placeholders y hay que
-// reemplazarlos por los datos reales del negocio. Nada más en
-// el sitio necesita tocarse para actualizar estos datos.
+// Caso ficticio: los datos de contacto marcados "EJEMPLO" son
+// inventados (no llevan a un contacto real). Para usar la web con
+// un negocio real, reemplazarlos acá. Nada más en el sitio necesita
+// tocarse para actualizar estos datos.
 // ============================================================
 
 const SITE_CONFIG = {
@@ -10,20 +11,27 @@ const SITE_CONFIG = {
   nombre: "El Fogón de Don Nino",
   barrio: "Villa Urquiza, CABA",
 
+  // Dirección inventada para el caso (la consigna no pide una real).
   direccion: "Av. Triunvirato 4324, Villa Urquiza, CABA",
 
-  // TODO: reemplazar por el número real, formato internacional sin espacios (ej: 5491122223333)
-  whatsappNumero: "5491100000000",
+  // EJEMPLO: número inventado, formato internacional sin espacios (ej: 5491122223333)
+  whatsappNumero: "5490000000000",
   // Mensaje precargado del botón de WhatsApp
   whatsappMensaje: "¡Hola! Quiero hacer una consulta / reserva en El Fogón de Don Nino.",
 
-  // TODO: reemplazar por el teléfono real de línea/celular del local
+  // EJEMPLO: teléfono inventado
   telefono: "+54 11 0000-0000",
   telefonoLinkTel: "+541100000000", // mismo número, formato para el link tel:
 
-  // TODO: reemplazar por el usuario real de Instagram
-  instagramUsuario: "@elfogondedonnino",
-  instagramUrl: "https://instagram.com/elfogondedonnino",
+  // EJEMPLO: link neutro a instagram.com para no apuntar a un perfil que
+  // podría ser de un tercero; el usuario mostrado es inventado.
+  instagramUsuario: "@elfogon_ejemplo",
+  instagramUrl: "https://instagram.com",
+
+  // Fecha que se muestra en la carta ("Precios actualizados el ...").
+  // Es el respaldo: si la planilla tiene una columna "Actualizado",
+  // se usa el valor de esa columna (así Facu no toca el código).
+  preciosActualizados: "3 de noviembre de 2026",
 
   horarios: [
     { dias: "Martes a Domingo", turnos: "Mediodía y noche" },
@@ -35,8 +43,7 @@ const SITE_CONFIG = {
     encodeURIComponent("Av. Triunvirato 4324, Villa Urquiza, Buenos Aires, Argentina") +
     "&z=16&output=embed",
 
-  // TODO: reemplazar por el link real al perfil del local en PedidosYa
-  // apenas lo tengamos (por ahora apunta a la home de PedidosYa).
+  // EJEMPLO: apunta a la home de PedidosYa (no se sabe qué app usan).
   delivery: {
     disponible: true,
     nombreApp: "PedidosYa",
