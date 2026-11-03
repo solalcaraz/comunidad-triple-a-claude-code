@@ -12,6 +12,12 @@ El desafío de este caso fue el contrario al anterior. Acá el cliente sí quier
 
 https://web-fogon-nino.vercel.app
 
+![Portada de El Fogón de Don Nino, con una tarjeta por cada categoría de la carta](capturas/portada.jpg)
+
+![Carta de El Fogón de Don Nino, con la fecha de actualización de precios y categorías](capturas/carta.jpg)
+
+![Sección Cómo pedir de El Fogón de Don Nino: salón, take away y delivery](capturas/servicios.jpg)
+
 Los datos de contacto son de ejemplo: el WhatsApp y el teléfono no existen, el botón de Instagram lleva a instagram.com y el de delivery a la home de PedidosYa. La dirección (Av. Triunvirato 4324) también es inventada.
 
 Las fotos son de relleno: tres son de Pexels y del resto no verifiqué el origen. En un proyecto real las reemplazaría por las del cliente.
