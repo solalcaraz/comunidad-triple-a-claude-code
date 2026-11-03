@@ -58,7 +58,11 @@ y se abre http://localhost:8765. También se puede ver en el link publicado.
 
 **Qué aprendí**
 
-[a confirmar]
+- Pensar cómo resolver el problema de los precios con una planilla. El cliente no quería tocar la web cada semana, así que la carta sale de una Google Sheet publicada como CSV: se cambian los precios ahí y la web se actualiza sola. Para que un precio viejo no parezca un error, sumé una columna "Actualizado" que alimenta la fecha visible.
+- Que los datos tienen que poder editarlos quienes no saben programar. Pensé la solución para Facu, que ya usa una planilla, y no para mi comodidad.
+- Que mucha información se ordena con estructura, no escondiéndola. A diferencia del caso anterior, acá no había que sacar cosas: las categorías de la carta y las tres formas de pedir, en tarjetas, hicieron que se sintiera simple.
+- Probar la web desde un servidor local y no con doble clic. Al abrir el archivo directo, la planilla no cargaba y se veía una carta incompleta.
+- Que el botón de reservar tiene que estar siempre a la vista. El botón flotante de WhatsApp resolvió la reserva del fin de semana en todas las páginas.
 
 **Qué mejoraría**
 
