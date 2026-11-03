@@ -66,6 +66,10 @@ const SITE_CONFIG = {
     "parrillada el fogón (para compartir)": "images/parrillada-completa.jpg",
     "tallarines con tuco de la casa": "images/tallarines-tuco.jpg",
     "flan de don nino": "images/flan-don-nino.jpg",
+    // Fotos para que las categorías sin plato con foto también la tengan en la portada.
+    "ensalada de la casa": "images/ensalada.jpg",
+    "limonada casera": "images/bebida-sin-alcohol.jpg",
+    "cerveza artesanal": "images/bebida-con-alcohol.jpg",
   },
 
   // Distintivo corto que se muestra junto al nombre del plato en la

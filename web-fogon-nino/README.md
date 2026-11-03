@@ -14,7 +14,7 @@ https://web-fogon-nino.vercel.app
 
 Los datos de contacto son de ejemplo: el WhatsApp y el teléfono no existen, el botón de Instagram lleva a instagram.com y el de delivery a la home de PedidosYa. La dirección (Av. Triunvirato 4324) también es inventada.
 
-Las fotos son de relleno y su origen no está verificado. En un proyecto real las reemplazaría por las del cliente.
+Las fotos son de relleno. Las de Ensaladas y las dos categorías de Bebidas son de Pexels: la ensalada de Florencia Potter (https://www.pexels.com/photo/402007/), la limonada de Dylann Hendricks (https://www.pexels.com/photo/15153422/) y la cerveza de Little Visuals (https://www.pexels.com/photo/1862/). Del resto no verifiqué el origen. En un proyecto real las reemplazaría por las del cliente.
 
 ## Tecnologías
 
