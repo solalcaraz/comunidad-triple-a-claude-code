@@ -12,6 +12,12 @@ El desafío fue que el visitante pasara de mirar fotos a escribir, respetando lo
 
 https://web-estudio-verde.vercel.app
 
+![Inicio de Estudio Verde: título, botón de WhatsApp y render de un patio con deck](capturas/hero.jpg)
+
+![Sección de proyectos realizados de Estudio Verde, con filtros y un proyecto destacado](capturas/proyectos.jpg)
+
+![Sección de contacto de Estudio Verde, con botones de WhatsApp y mail y un mapa](capturas/contacto.jpg)
+
 Los datos de contacto son de ejemplo: el WhatsApp y el mail no existen, y el botón de Instagram lleva a instagram.com. Los nombres de los proyectos, los metros cuadrados, las duraciones y las bios también son inventados.
 
 Las fotos son de relleno. Siete son de Pexels. Las otras tres (`proyecto-4`, `proyecto-5` y `proyecto-8`) son de origen sin verificar, y en un proyecto real no las usaría.
