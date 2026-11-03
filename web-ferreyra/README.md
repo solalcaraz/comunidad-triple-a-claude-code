@@ -12,6 +12,12 @@ El desafío de este caso fue la tensión entre seriedad y cercanía: transmitir 
 
 https://web-ferreyra-asociados.vercel.app
 
+![Inicio de Estudio Ferreyra & Asociados, con título, datos de confianza y foto de un escritorio](capturas/hero.jpg)
+
+![Servicios de Estudio Ferreyra agrupados en tres momentos del emprendedor](capturas/servicios.jpg)
+
+![Contacto de Estudio Ferreyra, con el formulario que envía la consulta a WhatsApp](capturas/contacto.jpg)
+
 Los datos son de ejemplo: el WhatsApp (5490000000000) no existe, y las matrículas y la dirección (Av. Colón 200) son inventadas, aunque el mapa muestra esa dirección real. Las frases de cada socio, los puntos junto al formulario ("Te lleva menos de un minuto") y la descripción del equipo de tres personas no vienen de las notas del cliente: son ficción del caso.
 
 Las fotos son de relleno y de personas ajenas al caso: vienen de Pexels y otras fuentes, y no verifiqué la licencia de todas. En un proyecto real las reemplazaría por las del estudio.
