@@ -65,4 +65,3 @@ No se corre: es una página estática y se ve en el link publicado, https://web-
 - Reemplazar las fotos de relleno por obras reales del cliente, y confirmar con él los metros cuadrados, las duraciones y las bios.
 - Poner los datos de contacto reales: WhatsApp, mail e Instagram.
 - Sumar testimonios y la matrícula profesional, cuando existan.
-- Medir la velocidad con Lighthouse sobre la web publicada y mejorar lo que salga.

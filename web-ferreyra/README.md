@@ -100,4 +100,3 @@ No se corre: es una página estática y se ve en el link publicado, https://web-
 - Reemplazar las fotos de relleno por las del estudio.
 - Poner los datos reales: WhatsApp, matrículas, dirección y mail.
 - Agregar testimonios de clientes reales, que acá no incluí para no inventarlos.
-- Medir la velocidad con Lighthouse sobre la web publicada y mejorar lo que salga.

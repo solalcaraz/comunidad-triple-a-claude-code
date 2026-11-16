@@ -72,4 +72,3 @@ No se corre: es una página estática y se ve en el link publicado, https://web-
 
 - Reemplazar las fotos de relleno por las del cliente.
 - Poner los datos de contacto reales: WhatsApp, teléfono, Instagram y el link de la app de delivery.
-- Medir la velocidad con Lighthouse sobre la web publicada y mejorar lo que salga.
